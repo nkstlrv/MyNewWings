@@ -40,6 +40,53 @@ def get_just_applied_contacts():
     return just_applied
 
 
+def get_verified_lead_contacts():
+    """
+    Contacts to which initial emails were send
+    """
+    all_contacts = get_all_contacts()
+
+    lead_contacts = [
+        contact
+        for contact in all_contacts
+        if contact.get("properties")["lifecyclestage"] == "lead"
+    ]
+
+    return lead_contacts
+
+
+def get_opportunity_contacts():
+    """
+    Contacts that are manually verified by a manager
+    """
+    all_contacts = get_all_contacts()
+
+    opportunity_contacts = [
+        contact
+        for contact in all_contacts
+        if contact.get("properties")["lifecyclestage"] == "opportunity"
+    ]
+
+    return opportunity_contacts
+
+
+def get_customer_contacts():
+    """
+    Contacts that received initial aircraft match
+    """
+    all_contacts = get_all_contacts()
+
+    customer_contacts = [
+        contact
+        for contact in all_contacts
+        if contact.get("properties")["lifecyclestage"] == "customer"
+    ]
+
+    return customer_contacts
+
+
 if __name__ == "__main__":
     print(get_all_contacts())
     print(get_just_applied_contacts())
+    print(get_verified_lead_contacts())
+    print(get_opportunity_contacts())
