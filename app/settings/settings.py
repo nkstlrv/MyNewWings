@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+
+from celery.schedules import crontab
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -125,3 +127,14 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+# Celery configurations:
+CELERY_BROKER_URL = "amqp://localhost"  # default port -> 15672; password -> guest
+
+CELERY_BEAT_SCHEDULE = {
+    "debug": {
+        "task": "celery_tasks.tasks.debug_task",
+        "schedule": crontab(minute="*/1"),
+    },
+}
