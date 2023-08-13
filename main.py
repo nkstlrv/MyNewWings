@@ -28,5 +28,18 @@ def get_all_contacts():
     return None
 
 
+def get_just_applied_contacts():
+    all_contacts = get_all_contacts()
+
+    just_applied = [
+        contact
+        for contact in all_contacts
+        if contact.get("properties")["lifecyclestage"] == "subscriber"
+    ]
+
+    return just_applied
+
+
 if __name__ == "__main__":
     print(get_all_contacts())
+    print(get_just_applied_contacts())
