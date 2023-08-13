@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "mynewwings",
 ]
 
 MIDDLEWARE = [
@@ -134,7 +135,7 @@ CELERY_BROKER_URL = "amqp://localhost"  # default port -> 15672; password -> gue
 
 CELERY_BEAT_SCHEDULE = {
     "debug": {
-        "task": "celery_tasks.tasks.debug_task",
+        "task": "mynewwings.tasks.debug_task",
         "schedule": crontab(minute="*/1"),
     },
 }
