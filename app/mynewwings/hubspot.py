@@ -85,8 +85,13 @@ def get_customer_contacts():
     return customer_contacts
 
 
+def prepare_data_for_openai():
+    contacts: list = get_opportunity_contacts()
+    pass
+
+
 if __name__ == "__main__":
-    print(get_all_contacts())
-    print(get_just_applied_contacts())
-    print(get_verified_lead_contacts())
+    # print(get_all_contacts())
+    # print(get_just_applied_contacts())
+    # print(get_verified_lead_contacts())
     print(get_opportunity_contacts())
