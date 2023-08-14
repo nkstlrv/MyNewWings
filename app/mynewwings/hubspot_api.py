@@ -123,7 +123,7 @@ def send_welcome_email():
             print("Wellcome email has been sent")
 
 
-def send_initial_plane_match_email():
+def send_initial_plane_options_email():
     properties = {"lifecyclestage": "customer"}
     simple_public_object_input = SimplePublicObjectInput(properties=properties)
 
@@ -141,14 +141,14 @@ def send_initial_plane_match_email():
             print(message)
 
             send_mail(
-                subject="Nikita from My New Wings",
+                subject="Initial Plane Options",
                 message=message,
                 from_email=EMAIL_HOST_USER,
                 recipient_list=[contact["properties"]["email"]],
                 fail_silently=False,
             )
 
-            print("Initial plane match email has been sent")
+            print("Initial plane options email has been sent")
 
 
 if __name__ == "__main__":
@@ -158,5 +158,5 @@ if __name__ == "__main__":
     print(get_opportunity_contacts())
     # send_welcome_email()
     # get_just_applied_contacts()
-    send_initial_plane_match_email()
+    send_initial_plane_options_email()
     print(get_customer_contacts())
