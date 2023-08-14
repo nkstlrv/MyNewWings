@@ -1,14 +1,14 @@
 from celery import shared_task
 import time
 import logging
-from hubspot_api import get_just_applied_contacts, get_opportunity_contacts
+from . import hubspot_api
+from . import chatgpt
 import os
 from dotenv import load_dotenv
 import hubspot
 from hubspot.crm.contacts import SimplePublicObjectInput
 from django.core.mail import send_mail
 from settings.settings import EMAIL_HOST_USER
-from chatgpt import prepare_email_with_suggested_planes
 
 load_dotenv()
 logging.basicConfig(level=logging.INFO, format="%(message)s")
@@ -29,12 +29,13 @@ def debug_task():
 
 @shared_task
 def send_welcome_email():
-    just_applied_contacts = get_just_applied_contacts()
+    logging.info(f"LOOKING FOR JUST APPLIED CONTACTS")
 
-    properties = {"lifecyclestage": "lead"}
-    simple_public_object_input = SimplePublicObjectInput(properties=properties)
-
+    just_applied_contacts = hubspot_api.get_just_applied_contacts()
     if just_applied_contacts:
+        properties = {"lifecyclestage": "lead"}
+        simple_public_object_input = SimplePublicObjectInput(properties=properties)
+
         for contact in just_applied_contacts:
             api_response = client.crm.contacts.basic_api.update(
                 contact_id=contact["id"],
@@ -57,12 +58,12 @@ def send_welcome_email():
 
 @shared_task
 def send_initial_plane_options_email():
-    properties = {"lifecyclestage": "customer"}
-    simple_public_object_input = SimplePublicObjectInput(properties=properties)
+    logging.info(f"LOOKING FOR OPPORTUNITY CONTACTS")
 
-    validated_contacts = get_opportunity_contacts()
-
+    validated_contacts = hubspot_api.get_opportunity_contacts()
     if validated_contacts:
+        properties = {"lifecyclestage": "customer"}
+        simple_public_object_input = SimplePublicObjectInput(properties=properties)
         for contact in validated_contacts:
             api_response = client.crm.contacts.basic_api.update(
                 contact_id=contact["id"],
@@ -70,7 +71,7 @@ def send_initial_plane_options_email():
             )
             logging.info(f"OPPORTUNITY -> CUSTOMER\n {api_response}")
 
-            message = prepare_email_with_suggested_planes(contact)
+            message = chatgpt.prepare_email_with_suggested_planes(contact)
             print(message)
 
             send_mail(

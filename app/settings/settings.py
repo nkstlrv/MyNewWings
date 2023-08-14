@@ -134,9 +134,17 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CELERY_BROKER_URL = "amqp://localhost"  # default port -> 15672; password -> guest
 
 CELERY_BEAT_SCHEDULE = {
-    "debug": {
-        "task": "mynewwings.tasks.debug_task",
+    # "debug": {
+    #     "task": "mynewwings.tasks.debug_task",
+    #     "schedule": crontab(minute="*/1"),
+    # },
+    "welcome_email": {
+        "task": "mynewwings.tasks.send_welcome_email",
         "schedule": crontab(minute="*/1"),
+    },
+    "initial_plane_options_email": {
+        "task": "mynewwings.tasks.send_initial_plane_options_email",
+        "schedule": crontab(minute="*/3"),
     },
 }
 

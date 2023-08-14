@@ -2,10 +2,11 @@ import os
 from dotenv import load_dotenv
 import requests
 import hubspot
-from hubspot.crm.contacts import SimplePublicObjectInput
-from django.core.mail import send_mail
-from settings.settings import EMAIL_HOST_USER
-from chatgpt import prepare_email_with_suggested_planes
+
+# from hubspot.crm.contacts import SimplePublicObjectInput
+# from django.core.mail import send_mail
+# from settings.settings import EMAIL_HOST_USER
+# from chatgpt import prepare_email_with_suggested_planes
 
 load_dotenv()
 
@@ -92,71 +93,59 @@ def get_customer_contacts():
     return customer_contacts
 
 
-def prepare_data_for_openai():
-    contacts: list = get_opportunity_contacts()
-    pass
-
-
-def send_welcome_email():
-    just_applied_contacts = get_just_applied_contacts()
-
-    properties = {"lifecyclestage": "lead"}
-    simple_public_object_input = SimplePublicObjectInput(properties=properties)
-
-    if just_applied_contacts:
-        for contact in just_applied_contacts:
-            api_response = client.crm.contacts.basic_api.update(
-                contact_id=contact["id"],
-                simple_public_object_input=simple_public_object_input,
-            )
-            print(api_response)
-
-            send_mail(
-                subject="Nikita from My New Wings",
-                message=f"Dear {contact['properties']['firstname']} \n"
-                f"Welcome to My New Wings family",
-                from_email=EMAIL_HOST_USER,
-                recipient_list=[contact["properties"]["email"]],
-                fail_silently=False,
-            )
-
-            print("Wellcome email has been sent")
-
-
-def send_initial_plane_options_email():
-    properties = {"lifecyclestage": "customer"}
-    simple_public_object_input = SimplePublicObjectInput(properties=properties)
-
-    validated_contacts = get_opportunity_contacts()
-
-    if validated_contacts:
-        for contact in validated_contacts:
-            api_response = client.crm.contacts.basic_api.update(
-                contact_id=contact["id"],
-                simple_public_object_input=simple_public_object_input,
-            )
-            print(api_response)
-
-            message = prepare_email_with_suggested_planes(contact)
-            print(message)
-
-            send_mail(
-                subject="Initial Plane Options",
-                message=message,
-                from_email=EMAIL_HOST_USER,
-                recipient_list=[contact["properties"]["email"]],
-                fail_silently=False,
-            )
-
-            print("Initial plane options email has been sent")
+# def send_welcome_email():
+#     just_applied_contacts = get_just_applied_contacts()
+#
+#     properties = {"lifecyclestage": "lead"}
+#     simple_public_object_input = SimplePublicObjectInput(properties=properties)
+#
+#     if just_applied_contacts:
+#         for contact in just_applied_contacts:
+#             api_response = client.crm.contacts.basic_api.update(
+#                 contact_id=contact["id"],
+#                 simple_public_object_input=simple_public_object_input,
+#             )
+#             print(api_response)
+#
+#             send_mail(
+#                 subject="Nikita from My New Wings",
+#                 message=f"Dear {contact['properties']['firstname']} \n"
+#                 f"Welcome to My New Wings family",
+#                 from_email=EMAIL_HOST_USER,
+#                 recipient_list=[contact["properties"]["email"]],
+#                 fail_silently=False,
+#             )
+#
+#             print("Wellcome email has been sent")
+#
+#
+# def send_initial_plane_options_email():
+#     properties = {"lifecyclestage": "customer"}
+#     simple_public_object_input = SimplePublicObjectInput(properties=properties)
+#
+#     validated_contacts = get_opportunity_contacts()
+#
+#     if validated_contacts:
+#         for contact in validated_contacts:
+#             api_response = client.crm.contacts.basic_api.update(
+#                 contact_id=contact["id"],
+#                 simple_public_object_input=simple_public_object_input,
+#             )
+#             print(api_response)
+#
+#             message = prepare_email_with_suggested_planes(contact)
+#             print(message)
+#
+#             send_mail(
+#                 subject="Initial Plane Options",
+#                 message=message,
+#                 from_email=EMAIL_HOST_USER,
+#                 recipient_list=[contact["properties"]["email"]],
+#                 fail_silently=False,
+#             )
+#
+#             print("Initial plane options email has been sent")
 
 
 if __name__ == "__main__":
-    # print(get_all_contacts())
-    # print(get_just_applied_contacts())
-    # print(get_verified_lead_contacts())
-    print(get_opportunity_contacts())
-    # send_welcome_email()
-    # get_just_applied_contacts()
-    send_initial_plane_options_email()
-    print(get_customer_contacts())
+    print(get_all_contacts())
