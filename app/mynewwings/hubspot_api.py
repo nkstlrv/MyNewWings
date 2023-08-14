@@ -4,7 +4,7 @@ import requests
 import hubspot
 from hubspot.crm.contacts import SimplePublicObjectInput
 from django.core.mail import send_mail
-from django.conf import settings
+from settings.settings import EMAIL_HOST_USER
 
 load_dotenv()
 
@@ -109,6 +109,16 @@ def send_welcome_email():
                 simple_public_object_input=simple_public_object_input,
             )
             print(api_response)
+
+            send_mail(
+                subject="Nikita from My New Wings",
+                message=f"Dear {contact['properties']['firstname']} \n"
+                f"Welcome to My New Wings family",
+                from_email=EMAIL_HOST_USER,
+                recipient_list=[contact["properties"]["email"]],
+                fail_silently=False,
+            )
+
             print("Email has been sent")
 
 
