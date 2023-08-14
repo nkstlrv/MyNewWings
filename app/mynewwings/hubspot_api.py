@@ -3,6 +3,8 @@ from dotenv import load_dotenv
 import requests
 import hubspot
 from hubspot.crm.contacts import SimplePublicObjectInput
+from django.core.mail import send_mail
+from django.conf import settings
 
 load_dotenv()
 
