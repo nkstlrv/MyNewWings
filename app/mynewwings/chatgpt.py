@@ -1,7 +1,6 @@
 import os
 from dotenv import load_dotenv
 import openai
-from hubspot import get_opportunity_contacts
 
 load_dotenv()
 
@@ -52,10 +51,8 @@ def prepare_email_with_suggested_planes(contact: dict):
         messages=[{"role": "user", "content": prompt}],
     )
     response_text = response["choices"][0]["message"]["content"]
-    print(response_text)
+    return response_text
 
 
 if __name__ == "__main__":
-    # demo_prompt()
-    prepare_email_with_suggested_planes(get_opportunity_contacts()[0])
     ...

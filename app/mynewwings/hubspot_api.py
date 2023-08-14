@@ -5,6 +5,7 @@ import hubspot
 from hubspot.crm.contacts import SimplePublicObjectInput
 from django.core.mail import send_mail
 from settings.settings import EMAIL_HOST_USER
+from chatgpt import prepare_email_with_suggested_planes
 
 load_dotenv()
 
@@ -119,13 +120,43 @@ def send_welcome_email():
                 fail_silently=False,
             )
 
-            print("Email has been sent")
+            print("Wellcome email has been sent")
+
+
+def send_initial_plane_match_email():
+    properties = {"lifecyclestage": "customer"}
+    simple_public_object_input = SimplePublicObjectInput(properties=properties)
+
+    validated_contacts = get_opportunity_contacts()
+
+    if validated_contacts:
+        for contact in validated_contacts:
+            api_response = client.crm.contacts.basic_api.update(
+                contact_id=contact["id"],
+                simple_public_object_input=simple_public_object_input,
+            )
+            print(api_response)
+
+            message = prepare_email_with_suggested_planes(contact)
+            print(message)
+
+            send_mail(
+                subject="Nikita from My New Wings",
+                message=message,
+                from_email=EMAIL_HOST_USER,
+                recipient_list=[contact["properties"]["email"]],
+                fail_silently=False,
+            )
+
+            print("Initial plane match email has been sent")
 
 
 if __name__ == "__main__":
     # print(get_all_contacts())
-    print(get_just_applied_contacts())
+    # print(get_just_applied_contacts())
     # print(get_verified_lead_contacts())
-    # print(get_opportunity_contacts())
-    send_welcome_email()
-    print(get_just_applied_contacts())
+    print(get_opportunity_contacts())
+    # send_welcome_email()
+    # get_just_applied_contacts()
+    send_initial_plane_match_email()
+    print(get_customer_contacts())
