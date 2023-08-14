@@ -2,3 +2,5 @@ requests
 python-dotenv
 Django
 Celery
+openai
+hubspot-api-client
