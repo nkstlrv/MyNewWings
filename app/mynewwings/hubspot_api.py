@@ -107,6 +107,7 @@ def send_welcome_email():
                 simple_public_object_input=simple_public_object_input,
             )
             print(api_response)
+            print("Email has been sent")
 
 
 if __name__ == "__main__":
