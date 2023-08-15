@@ -15,7 +15,10 @@
 5. **Personalized Assistance:** Post this process, a personal manager continues the interaction with the customer to pinpoint their perfect aircraft.
 
 
-## Frontend
+## Website
+#### built using Tilda
+
+Website Link: [http://mynewwings.tilda.ws](http://mynewwings.tilda.ws)
 
 ![Home Page](readme_images/home.png)
 
@@ -34,3 +37,9 @@
 ![3)](readme_images/form_3.png)
 
 ![4)](readme_images/form_success.png)
+
+## 🔗 Links
+[![my github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/nkstlrv)
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/nikitastoliarov)
+
+
