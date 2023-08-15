@@ -72,7 +72,7 @@ def send_initial_plane_options_email():
             logging.info(f"OPPORTUNITY -> CUSTOMER\n {api_response}")
 
             message = chatgpt.prepare_email_with_suggested_planes(contact)
-            print(message)
+            logging.info(message)
 
             send_mail(
                 subject="Initial Plane Options",

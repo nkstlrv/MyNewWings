@@ -140,11 +140,11 @@ CELERY_BEAT_SCHEDULE = {
     # },
     "welcome_email": {
         "task": "mynewwings.tasks.send_welcome_email",
-        "schedule": crontab(minute="*/1"),
+        "schedule": crontab(minute="*/11"),
     },
     "initial_plane_options_email": {
         "task": "mynewwings.tasks.send_initial_plane_options_email",
-        "schedule": crontab(minute="*/3"),
+        "schedule": crontab(minute="*/30"),
     },
 }
 

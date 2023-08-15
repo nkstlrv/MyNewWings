@@ -39,13 +39,14 @@ def get_all_contacts():
 def get_just_applied_contacts():
     all_contacts = get_all_contacts()
 
-    just_applied = [
-        contact
-        for contact in all_contacts
-        if contact.get("properties")["lifecyclestage"] == "subscriber"
-    ]
+    if all_contacts:
+        just_applied = [
+            contact
+            for contact in all_contacts
+            if contact.get("properties")["lifecyclestage"] == "subscriber"
+        ]
 
-    return just_applied
+        return just_applied
 
 
 def get_verified_lead_contacts():
@@ -69,13 +70,14 @@ def get_opportunity_contacts():
     """
     all_contacts = get_all_contacts()
 
-    opportunity_contacts = [
-        contact
-        for contact in all_contacts
-        if contact.get("properties")["lifecyclestage"] == "opportunity"
-    ]
+    if all_contacts:
+        opportunity_contacts = [
+            contact
+            for contact in all_contacts
+            if contact.get("properties")["lifecyclestage"] == "opportunity"
+        ]
 
-    return opportunity_contacts
+        return opportunity_contacts
 
 
 def get_customer_contacts():
