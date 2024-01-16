@@ -1,4 +1,4 @@
-# My New Wings 🪽
+# My New Wings ✈
 
 **My New Wings** is an AI-powered tool designed to assist individuals in selecting the ideal general aviation airplane that fits their needs and preferences.
 
